@@ -1,0 +1,4 @@
+#!/bin/bash
+
+SAIL_BIN="$(dirname "$(dirname "$(realpath "$0")")")/python-311.sh"
+"${SAIL_BIN}" $@

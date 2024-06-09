@@ -1,0 +1,3 @@
+COMPOSER_BIN=$(which composer)
+[ -n "${COMPOSER_BIN}" ] && addToPath "$(${COMPOSER_BIN} config --global home)/vendor/bin"
+unset COMPOSER_BIN

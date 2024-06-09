@@ -1,0 +1,4 @@
+#!/bin/bash
+
+SAIL_BIN="$(dirname "$(dirname "$(realpath "$0")")")/ubuntu-focal.sh"
+"${SAIL_BIN}" $@

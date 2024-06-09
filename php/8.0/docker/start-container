@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ ! -z "$PHP_USER" ]; then
+    usermod -u $PHP_USER sail
+fi
+
+SAIL_HOME=$(getent passwd sail | cut -d':' -f 6)
+if [ ! -d "${SAIL_HOME}/.config/composer" ]; then
+    gosu sail ${SAIL_HOME}/bin/init-composer
+fi
+
+if [ $# -gt 0 ]; then
+    exec gosu $PHP_USER "$@"
+else
+    gosu /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+fi

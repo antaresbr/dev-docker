@@ -1,0 +1,6 @@
+services:
+    python-311:
+        environment:
+            - DOCKER_HOST_GID=${DOCKER_HOST_GID}
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock

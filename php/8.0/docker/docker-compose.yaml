@@ -1,0 +1,33 @@
+services:
+    php-80:
+        image: local/${SAIL_PROJECT}:${SAIL_VERSION}
+        build:
+            args:
+                SAIL_BASE_IMAGE: ${SAIL_BASE_IMAGE}
+                SAIL_PROJECT: ${SAIL_PROJECT}
+                SAIL_VERSION: ${SAIL_VERSION}
+                SAIL_VERSION_CODENAME: ${SAIL_VERSION_CODENAME}
+                SAIL_USER: ${SAIL_USER}
+                SAIL_GROUP: ${SAIL_GROUP}
+                SAIL_PASSWORD: ${SAIL_PASSWORD}
+                NODE_VERSION: ${NODE_VERSION}
+            context: .
+        container_name: workspace-${SAIL_PROJECT}-${SAIL_VERSION_WS}
+        extra_hosts:
+            - host.docker.internal:host-gateway
+            - gateway.docker.internal:host-gateway
+        entrypoint: /usr/local/bin/entrypoint-loop.sh
+        environment:
+            - SAIL_USER=${SAIL_USER}
+            - SAIL_GROUP=${SAIL_GROUP}
+        volumes:
+            - ../../../..:/home/sail/workspace
+            - ../data/.config:/home/sail/.config
+            - ../data/.vscode-server:/home/sail/.vscode-server
+        networks:
+            - workspace-net
+
+networks:
+    workspace-net:
+        name: ${COMPOSE_PROJECT_NAME}-net
+        driver: bridge

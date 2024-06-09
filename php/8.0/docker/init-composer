@@ -1,0 +1,15 @@
+#!/bin/bash
+
+COMPOSER_BIN=$(which composer)
+[ -z "${COMPOSER_BIN}" ] && echo "ERRO: Composer nao instalado" && exit 1
+
+COMPOSER_DIR=$(${COMPOSER_BIN} config --global home)
+[ -z "${COMPOSER_DIR}" ] && echo "ERRO: COMPOSER_DIR nao encontrado" && exit 1
+
+COMPOSER_FILE=${COMPOSER_DIR}/composer.json
+[ ! -f "${COMPOSER_FILE}" ] && echo "{}" > "${COMPOSER_FILE}" && chmod 664 "${COMPOSER_FILE}"
+
+composer config --global repos.packagist composer https://packagist.org
+composer global require 'laravel/installer'
+
+composer global update
