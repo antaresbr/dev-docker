@@ -2,7 +2,7 @@
 
 DOCKER_BASE_DIR="$(dirname "$(realpath "$0")")"
 DOCKER_BASE_DIR="$(realpath --canonicalize-existing --relative-to=${HOME} "${DOCKER_BASE_DIR}" 2> /dev/null)"
-[ -z "${DOCKER_BASE_DIR}" ] && echo "$(basename "$0") | ERRO: Impossível determinar DOCKER_BASE_DIR" && exit 1
+[ -z "${DOCKER_BASE_DIR}" ] && echo "$(basename "$0") | ERROR: Unable to get DOCKER_BASE_DIR" && exit 1
 
 createBinLink() {
     local zTarget="$1"

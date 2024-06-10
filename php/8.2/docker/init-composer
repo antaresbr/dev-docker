@@ -1,10 +1,10 @@
 #!/bin/bash
 
 COMPOSER_BIN=$(which composer)
-[ -z "${COMPOSER_BIN}" ] && echo "ERRO: Composer nao instalado" && exit 1
+[ -z "${COMPOSER_BIN}" ] && echo "ERROR: Composer not installed" && exit 1
 
 COMPOSER_DIR=$(${COMPOSER_BIN} config --global home)
-[ -z "${COMPOSER_DIR}" ] && echo "ERRO: COMPOSER_DIR nao encontrado" && exit 1
+[ -z "${COMPOSER_DIR}" ] && echo "ERROR: COMPOSER_DIR not found" && exit 1
 
 COMPOSER_FILE=${COMPOSER_DIR}/composer.json
 [ ! -f "${COMPOSER_FILE}" ] && echo "{}" > "${COMPOSER_FILE}" && chmod 664 "${COMPOSER_FILE}"
