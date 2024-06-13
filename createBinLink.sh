@@ -20,7 +20,8 @@ while [ $# -gt 0 ]
 do
   pTarget="$1"
 
-  [ "${pTarget}" == "all" -o "${pTarget}" == "pentaho-pdi-93" ] && createBinLink "pentaho/pdi/9.3/pentaho-pdi-93.sh"
+  [ "${pTarget}" == "all" -o "${pTarget}" == "node-14" ] && createBinLink "node/14/node-14.sh"
+  [ "${pTarget}" == "all" -o "${pTarget}" == "node-20" ] && createBinLink "node/20/node-20.sh"
 
   [ "${pTarget}" == "all" -o "${pTarget}" == "php-80" ] && createBinLink "php/8.0/php-80.sh"
   [ "${pTarget}" == "all" -o "${pTarget}" == "php-81" ] && createBinLink "php/8.1/php-81.sh"

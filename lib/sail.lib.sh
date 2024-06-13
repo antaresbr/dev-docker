@@ -145,7 +145,7 @@ case "${pAction}" in
     [ -n "${pNoInteractive}" ] || xInteractive="--interactive"
     [ -n "${pNoTTY}" ] || xTTY="--tty"
     [ "${pAction}" == "shell" ] && serviceShell=${SAIL_SHELL}
-    docker exec --user sail ${xInteractive} ${xTTY} workspace-${SAIL_PROJECT}-${SAIL_VERSION_WS} ${serviceShell} $@
+    docker exec --user ${SAIL_USERNAME:-sail} ${xInteractive} ${xTTY} workspace-${SAIL_PROJECT}-${SAIL_VERSION_WS} ${serviceShell} $@
   ;;
   'config' | 'down' | 'logs' | 'ls' | 'pipe' | 'ps' | 'restart' | 'top' | 'up')
     [ "${pAction}" != "pipe" ] || pAction=""
