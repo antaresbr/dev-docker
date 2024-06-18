@@ -59,6 +59,32 @@ function dockerConfigs() {
   fi
 }
 
+function externalNetworks_up() {
+  local networks="${WORKSPACE_EXTERNAL_NETWORKS}"
+  [ -n "${networks}" ] || networks="workspace-net"
+  local network=""
+  for network in ${networks}
+  do
+    ${DOCKER_BIN} network inspect ${network} &> /dev/null
+    [ $? -eq 0 ] || ${DOCKER_BIN} network create ${network}
+    [ $? -eq 0 ] || sailError "Failed to create network '${network}'"
+  done
+}
+
+function externalNetworks_down() {
+  local networks="${WORKSPACE_EXTERNAL_NETWORKS}"
+  [ -n "${networks}" ] || networks="workspace-net"
+  local network=""
+  for network in ${networks}
+  do
+    local netCount="$(${DOCKER_BIN} network inspect ${network} | jq -r '.[0].Containers | length')"
+    if [ $? -eq 0 ] && [ "${netCount}" == "0" ]
+    then
+      ${DOCKER_BIN} network rm ${network}
+    fi
+  done
+}
+
 envFile="${SAIL_DIR}/.env"
 if [ -f "${envFile}" ]
 then
@@ -78,13 +104,12 @@ then
 fi
 unset envFile
 
-COMPOSE_BIN=$(which docker)
-if [ -n "${COMPOSE_BIN}" ]
-then
-  COMPOSE_BIN="${COMPOSE_BIN} compose"
-  ${COMPOSE_BIN} version &> /dev/null
-  [ $? -eq 0 ] || COMPOSE_BIN=""
-fi
+DOCKER_BIN=$(which docker)
+[ -n "${DOCKER_BIN}" ] || sailError "Failed to get DOCKER_BIN"
+
+COMPOSE_BIN="${DOCKER_BIN} compose"
+${COMPOSE_BIN} version &> /dev/null
+[ $? -eq 0 ] || COMPOSE_BIN=""
 [ -n "${COMPOSE_BIN}" ] || COMPOSE_BIN=$(which docker-compose)
 [ -n "${COMPOSE_BIN}" ] || sailError "Failed to get COMPOSE_BIN"
 
@@ -148,8 +173,10 @@ case "${pAction}" in
     docker exec --user ${SAIL_USERNAME:-sail} ${xInteractive} ${xTTY} workspace-${SAIL_PROJECT}-${SAIL_VERSION_WS} ${serviceShell} $@
   ;;
   'config' | 'down' | 'logs' | 'ls' | 'pipe' | 'ps' | 'restart' | 'top' | 'up')
+    [ "${pAction}" == "restart" -o "${pAction}" == "up" ] && externalNetworks_up
     [ "${pAction}" != "pipe" ] || pAction=""
     ${COMPOSE_BIN} ${DOCKER_CONFIGS} ${pAction} "$@"
+    [ "${pAction}" == "down" ] && externalNetworks_down
   ;;
   'help' | '--help')
     script=$(basename "$0")

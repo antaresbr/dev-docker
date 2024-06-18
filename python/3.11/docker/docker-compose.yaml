@@ -26,9 +26,13 @@ services:
             - ../data/.local:/home/sail/.local
             - ../data/.vscode-server:/home/sail/.vscode-server
         networks:
+            - workspace-project-net
             - workspace-net
 
 networks:
-    workspace-net:
+    workspace-project-net:
         name: ${COMPOSE_PROJECT_NAME}-net
         driver: bridge
+
+    workspace-net:
+        external: true

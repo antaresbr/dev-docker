@@ -17,8 +17,6 @@ services:
             - host.docker.internal:host-gateway
             - gateway.docker.internal:host-gateway
         entrypoint: /usr/local/bin/entrypoint-loop.sh
-        ports:
-            - 8000:8000
         environment:
             - SAIL_USER=${SAIL_USER}
             - SAIL_GROUP=${SAIL_GROUP}
@@ -27,9 +25,13 @@ services:
             - ../data/.config:/home/sail/.config
             - ../data/.vscode-server:/home/sail/.vscode-server
         networks:
+            - workspace-project-net
             - workspace-net
 
 networks:
-    workspace-net:
+    workspace-project-net:
         name: ${COMPOSE_PROJECT_NAME}-net
         driver: bridge
+
+    workspace-net:
+        external: true
