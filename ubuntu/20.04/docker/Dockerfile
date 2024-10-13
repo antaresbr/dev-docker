@@ -6,9 +6,9 @@ ARG SAIL_GROUP=1000
 ARG SAIL_USER=1000
 ARG SAIL_PASSWORD
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV LANG C.UTF-8
-ENV TZ UTC
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV TZ=UTC
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
