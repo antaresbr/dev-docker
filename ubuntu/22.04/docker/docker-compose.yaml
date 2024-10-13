@@ -20,7 +20,7 @@ services:
           - SAIL_USER=${SAIL_USER}
           - SAIL_GROUP=${SAIL_GROUP}
         volumes:
-            - ../../../..:/home/sail/workspace
+            - ${SAIL_HOST_WORKSPACE}:${SAIL_WORKSPACE}
         networks:
             - workspace-project-net
             - workspace-net

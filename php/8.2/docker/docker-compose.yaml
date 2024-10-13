@@ -21,7 +21,7 @@ services:
             - SAIL_USER=${SAIL_USER}
             - SAIL_GROUP=${SAIL_GROUP}
         volumes:
-            - ../../../..:/home/sail/workspace
+            - ${SAIL_HOST_WORKSPACE}:${SAIL_WORKSPACE}
             - ../data/.config:/home/sail/.config
             - ../data/.vscode-server:/home/sail/.vscode-server
         networks:

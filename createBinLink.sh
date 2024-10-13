@@ -10,7 +10,8 @@ createBinLink() {
     then
       echo "$(basename "$0") | Alvo não encontrado, ${zTarget}"
     else
-      [ ! -f "${HOME}/bin/$(basename "$zTarget")" ] && ln --verbose --symbolic "../${DOCKER_BASE_DIR}/${zTarget}" "${HOME}/bin"
+      local linkFile="$(basename "$(dirname "${DOCKER_BASE_DIR}")")-$(basename "$zTarget")"
+      [ ! -f "${HOME}/bin/${linkFile}" ] && ln --verbose --symbolic "../${DOCKER_BASE_DIR}/${zTarget}" "${HOME}/bin/${linkFile}"
     fi
 }
 
