@@ -11,7 +11,7 @@ services:
                 SAIL_GROUP: ${SAIL_GROUP}
                 SAIL_PASSWORD: ${SAIL_PASSWORD}
             context: .
-        container_name: workspace-${SAIL_PROJECT}-${SAIL_VERSION_WS}
+        container_name: ${SAIL_BASENAME}-${SAIL_PROJECT}-${SAIL_VERSION_WS}
         extra_hosts:
             - host.docker.internal:host-gateway
             - gateway.docker.internal:host-gateway
