@@ -171,6 +171,7 @@ case "${pAction}" in
     [ -n "${pNoTTY}" ] || xTTY="--tty"
     [ "${pAction}" == "shell" ] && serviceShell=${SAIL_SHELL}
     docker exec --user ${SAIL_USERNAME:-sail} ${xInteractive} ${xTTY} ${SAIL_BASENAME}-${SAIL_PROJECT}-${SAIL_VERSION_WS} ${serviceShell} $@
+    _ec=$?; [ "${_ec}" -eq 0 ] || exit ${_ec}
   ;;
   'config' | 'down' | 'logs' | 'ls' | 'pipe' | 'ps' | 'restart' | 'top' | 'up')
     [ "${pAction}" == "restart" -o "${pAction}" == "up" ] && externalNetworks_up
