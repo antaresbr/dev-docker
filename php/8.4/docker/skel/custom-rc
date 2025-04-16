@@ -1,0 +1,34 @@
+#!/bin/bash
+
+applyFile() {
+  local zSource="/tmp/skel/$1"
+  local zTarget="$2"
+
+  [ -n "${zTarget}" ] || zTarget=".$(basename "${zSource}")"
+
+  [ ! -f "${zSource}" ] || cat "${zSource}" >> "${zTarget}"
+  [ ! -f "${zTarget}" ] || chmod 644 "${zTarget}"
+  [ -z "${APPLY_USER}" ] || chown "${APPLY_USER}:" "${zTarget}"
+}
+
+apply() {
+  zPath="$1"
+
+  [ -d "${zPath}" ] || return
+
+  cd "${zPath}"
+  echo "applying in ${zPath}"
+
+  fgrep '~/.bash_aliases' .bashrc &> /dev/null || applyFile bashrc_aliases .bashrc
+  fgrep '~/.bash_paths' .bashrc &> /dev/null || applyFile bashrc_paths .bashrc
+  applyFile bash_aliases
+  applyFile bash_paths
+  applyFile screenrc
+  applyFile vimrc
+}
+
+apply "/etc/skel"
+apply "/root"
+APPLY_USER="{{USERNAME}}" apply "/home/{{USERNAME}}"
+
+rm -rf /tmp/skel

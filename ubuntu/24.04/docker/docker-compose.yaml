@@ -1,6 +1,6 @@
 services:
-    python-311:
-        image: local/${SAIL_PROJECT}:${SAIL_VERSION}
+    ubuntu-noble:
+        image: local/${SAIL_PROJECT}:${SAIL_VERSION_CODENAME}
         build:
             args:
                 SAIL_BASE_IMAGE: ${SAIL_BASE_IMAGE}
@@ -23,11 +23,6 @@ services:
           - SAIL_USERNAME=${SAIL_USERNAME}
         volumes:
             - ${SAIL_HOST_WORKSPACE}:${SAIL_WORKSPACE}
-            - ../data/.cache:/home/${SAIL_USERNAME}/.cache
-            - ../data/.config:/home/${SAIL_USERNAME}/.config
-            - ../data/.local:/home/${SAIL_USERNAME}/.local
-            - ../data/.npm:/home/${SAIL_USERNAME}/.npm
-            - ../data/.vscode-server:/home/${SAIL_USERNAME}/.vscode-server
         networks:
             - workspace-project-net
             - workspace-net
