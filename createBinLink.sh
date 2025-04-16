@@ -8,14 +8,14 @@ createBinLink() {
     local zTarget="$1"
     if [ ! -f "${HOME}/${DOCKER_BASE_DIR}/${zTarget}" ]
     then
-      echo "$(basename "$0") | Alvo não encontrado, ${zTarget}"
+      echo "$(basename "$0") | Target not found, ${zTarget}"
     else
       local linkFile="$(basename "$(dirname "${DOCKER_BASE_DIR}")")-$(basename "$zTarget")"
       [ ! -f "${HOME}/bin/${linkFile}" ] && ln --verbose --symbolic "../${DOCKER_BASE_DIR}/${zTarget}" "${HOME}/bin/${linkFile}"
     fi
 }
 
-[ $# -gt 0 ] || { echo "$(basename "$0") | Nenhum alvo informado"; exit 1; }
+[ $# -gt 0 ] || { echo "$(basename "$0") | Target not provided"; exit 1; }
 
 while [ $# -gt 0 ]
 do
@@ -24,6 +24,8 @@ do
   [ "${pTarget}" == "all" -o "${pTarget}" == "node-14" ] && createBinLink "node/14/node-14.sh"
   [ "${pTarget}" == "all" -o "${pTarget}" == "node-20" ] && createBinLink "node/20/node-20.sh"
   [ "${pTarget}" == "all" -o "${pTarget}" == "node-22" ] && createBinLink "node/20/node-22.sh"
+
+  [ "${pTarget}" == "all" -o "${pTarget}" == "pentaho-pdi-93" ] && createBinLink "pentaho/pdi/9.3/pentaho-pdi-93.sh"
 
   [ "${pTarget}" == "all" -o "${pTarget}" == "php-80" ] && createBinLink "php/8.0/php-80.sh"
   [ "${pTarget}" == "all" -o "${pTarget}" == "php-81" ] && createBinLink "php/8.1/php-81.sh"

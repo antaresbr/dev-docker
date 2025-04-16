@@ -1,0 +1,4 @@
+#!/bin/bash
+
+SAIL_BIN="$(dirname "$(dirname "$(realpath "$0")")")/pentaho-pdi-93.sh"
+"${SAIL_BIN}" $@

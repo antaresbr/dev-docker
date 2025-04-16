@@ -1,0 +1,29 @@
+services:
+    pentaho-pdi-93:
+        image: local/${SAIL_PROJECT}:${SAIL_VERSION}
+        build:
+            args:
+                SAIL_BASE_IMAGE: ${SAIL_BASE_IMAGE}
+                SAIL_PROJECT: ${SAIL_PROJECT}
+                SAIL_VERSION: ${SAIL_VERSION}
+                SAIL_USER: ${SAIL_USER}
+                SAIL_GROUP: ${SAIL_GROUP}
+                SAIL_PASSWORD: ${SAIL_PASSWORD}
+            context: .
+        container_name: ${SAIL_BASENAME}-${SAIL_PROJECT}-${SAIL_VERSION_WS}
+        extra_hosts:
+            - host.docker.internal:host-gateway
+            - gateway.docker.internal:host-gateway
+        entrypoint: /usr/local/bin/entrypoint-loop.sh
+        environment:
+          - SAIL_USER=${SAIL_USER}
+          - SAIL_GROUP=${SAIL_GROUP}
+        volumes:
+            - ${SAIL_HOST_WORKSPACE}:${SAIL_WORKSPACE}
+        networks:
+            - workspace-project-net
+
+networks:
+    workspace-project-net:
+        name: ${COMPOSE_PROJECT_NAME}-net
+        driver: bridge
