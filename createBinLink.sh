@@ -23,7 +23,7 @@ do
 
   [ "${pTarget}" == "all" -o "${pTarget}" == "node-14" ] && createBinLink "node/14/node-14.sh"
   [ "${pTarget}" == "all" -o "${pTarget}" == "node-20" ] && createBinLink "node/20/node-20.sh"
-  [ "${pTarget}" == "all" -o "${pTarget}" == "node-22" ] && createBinLink "node/20/node-22.sh"
+  [ "${pTarget}" == "all" -o "${pTarget}" == "node-22" ] && createBinLink "node/22/node-22.sh"
 
   [ "${pTarget}" == "all" -o "${pTarget}" == "pentaho-pdi-93" ] && createBinLink "pentaho/pdi/9.3/pentaho-pdi-93.sh"
 

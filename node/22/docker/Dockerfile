@@ -39,7 +39,7 @@ RUN sed -i "s/{{USERNAME}}/${SAIL_USERNAME}/g" /etc/sudoers.d/${SAIL_USERNAME}
 #-- senha: sail
 RUN [ -z "${SAIL_PASSWORD}" ] || usermod --password "${SAIL_PASSWORD}" ${SAIL_USERNAME}
 
-COPY init-node.sh /home/${SAIL_USERNAME}/bin
+COPY init-node.sh init-angular.sh /home/${SAIL_USERNAME}/bin
 RUN chown -R ${SAIL_USER}:${SAIL_GROUP} /home/${SAIL_USERNAME}
 
 USER ${SAIL_USERNAME}
