@@ -1,5 +1,5 @@
 services:
-    node-20:
+    node-24:
         image: local/${SAIL_PROJECT}:${SAIL_VERSION}
         build:
             args:
